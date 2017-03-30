@@ -13,9 +13,9 @@ class BasicUsage(unittest.TestCase):
         L = lists.list_of_chars("hello")
         self.assertEqual(L, ['h', 'e', 'l', 'l', 'o'])
 
-    def test_list_append(self):
+    def test_list_extend(self):
         L = list(range(5))
-        lists.list_append(L, range(5, 8))
+        lists.list_extend(L, range(5, 8))
         self.assertEqual(L, list(range(8)))
 
     def test_list_length(self):
@@ -32,16 +32,17 @@ class BasicUsage(unittest.TestCase):
         
     def test_get_second_to_last_item(self):
         L = list(range(20))
-        self.assertEqual(19, lists.get_second_to_last_item(L))
+        self.assertEqual(18, lists.get_second_to_last_item(L))
 
     def test_slice_from_to(self):
         L = list('Hello, world!')
         self.assertEqual(L[2:5], lists.slice_from_to(L, 2, 5))
 
     def test_slice_last_n(self):
+        a = 'Hello, world!'
         for i in range(len(a) + 1):
             with self.subTest(n=i):
-                L = list('Hello, world!')
+                L = list(a)
                 self.assertEqual(L[-i:], lists.slice_last_n(L, i))
 
     def test_copy_of_list(self):
@@ -60,10 +61,10 @@ class BasicUsage(unittest.TestCase):
                 self.assertEqual(L[::3], S)
 
     def test_square_each(self):
-        self.assertEqual([0, 1, 4, 9, 16], lists.square_each(range(5)))
+        self.assertEqual([0, 1, 4, 9, 16], lists.square_each(list(range(5))))
 
     def test_if_even_square_each(self):
-        self.assertEqual([0, 4, 16], lists.square_each(range(5)))
+        self.assertEqual([0, 4, 16], lists.if_even_square_each(list(range(5))))
 
 
 class Challenge(unittest.TestCase):
@@ -74,4 +75,3 @@ class Challenge(unittest.TestCase):
     def test_positive_number_count(self):
         self.assertEqual(5, lists.positive_number_count([3, 2, -1, -3,
                                                          5, 2, -5, 1]))
-
