@@ -1,8 +1,8 @@
 def create_set_from_elements(L):
-    pass
+    return set(L)
 
 def union_sets(A, B):
-    pass
+    return A | B
 
 def key_in_set(S, k):
-    pass
+    return k in S

@@ -1,8 +1,8 @@
 def dict_length(D):
-    pass
+    return len(D)
 
 def sorted_list_of_items(D):
-    pass
+    return sorted(list(D.items))
 
 def dict_from_keys_values(k, v):
-    pass
+    return dict(zip(k,v))
