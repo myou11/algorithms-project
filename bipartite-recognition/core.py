@@ -69,7 +69,9 @@ def bipartite_color_graph(g):
                 if neighbor_attr['color'] != 1 - ncolor:
                     odd_cycle_nodes = odd_cycle_helper(g, n, neighbor)
                     x = 'Not bipartite. Odd cycle in graph: {}'
-                    raise ValueError(x.format(odd_cycle_nodes))
+                    err = ValueError(x.format(odd_cycle_nodes))
+                    err.odd_cycle = odd_cycle_nodes
+                    raise err
             else:
                 q.append(neighbor)
                 neighbor_attr.update({'color': 1 - ncolor,
@@ -83,7 +85,13 @@ def bipartite_color_graph(g):
 
 def main(argv):
     g = read_graph_from_file(argv[1])
-    print(bipartite_color_graph(g))
+    try:
+        color1, color2 = bipartite_color_graph(g)
+        print('Graph is two colorable, split into groups:')
+        print(color1)
+        print(color2)
+    except ValueError as err:
+        print(err)
 
 if __name__ == "__main__":
     main(sys.argv)
