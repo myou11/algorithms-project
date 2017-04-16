@@ -3,10 +3,14 @@ from collections import deque
 from undirected_graph import Graph
 
 def read_edges_from_file(filename):
+    '''The file should have lines of the form "x y",
+    indicating that there is an edge between the node
+    named "x" and the node named "y"'''
     with open(filename) as f:
         return [tuple(line.strip().split()) for line in f.readlines()]
 
 def read_graph_from_file(filename):
+    '''Parse edges from the file and load them into a graph object.'''
     edges = read_edges_from_file(filename)
     g = Graph()
     for v, u in edges:
@@ -14,6 +18,9 @@ def read_graph_from_file(filename):
     return g
 
 def parent_path(g, n):
+    '''Record the nodes on the path from n
+    to the BFS root, following parent references.
+    Includes n and the root. Returns the list of nodes.'''
     ret = []
     while n != None:
         ret.append(n)
@@ -21,6 +28,8 @@ def parent_path(g, n):
     return ret
 
 def lowest_common_ancestor(g, a, b):
+    '''Compute the lowest common ancestor in the BFS tree
+    between nodes "a" and "b" in g.'''
     a_ancestors = set(parent_path(g, a))
     for b_ancestor in parent_path(g, b):
         if b_ancestor in a_ancestors:
@@ -29,6 +38,10 @@ def lowest_common_ancestor(g, a, b):
     raise ValueError(x.format(a, b))
 
 def odd_cycle_helper(g, a, b):
+    '''Having found an edge between a and b, both being
+    the same color, compute the nodes in the odd cycle
+    that prevents us from coloring the graph with only
+    two colors.'''
     lca = lowest_common_ancestor(g, a, b)
     app = parent_path(g, a)
     app = app[: app.index(lca) + 1]
@@ -37,7 +50,11 @@ def odd_cycle_helper(g, a, b):
     return list(reversed(app)) + bpp[:-1]
 
 def bipartite_color_graph(g):
-    '''Assumes g is connected, otherwise run on each
+    '''Group the nodes into two groups, with all edges going
+    between groups (not within) if the graph is bipartite.
+    Otherwise, return the odd length cycle that prevents
+    this graph from being two-colorable.
+    Assumes g is connected, otherwise run on each
     component and assemble final coloring from component coloring'''
     g = g.copy()
     s = list(g.nodes)[0]
