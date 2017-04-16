@@ -77,11 +77,11 @@ def bipartite_color_graph(g):
                 neighbor_attr.update({'color': 1 - ncolor,
                                           'parent': n})
 
-    ret_lists = ([], [])
+    ret_sets = (set(), set())
     for node in g.nodes:
         color = g.attributes_of(node)['color']
-        ret_lists[color].append(node)
-    return ret_lists
+        ret_sets[color].add(node)
+    return ret_sets
 
 def main(argv):
     g = read_graph_from_file(argv[1])
