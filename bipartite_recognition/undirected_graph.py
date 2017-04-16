@@ -21,7 +21,7 @@ class Graph:
         ret.nodes = copy.deepcopy(self.nodes)
         ret.edges = copy.deepcopy(self.edges)
         return ret
-    
+
     def add_node(self, identity, attributes=None):
         self.nodes[identity] = normalize_attributes(attributes)
 
@@ -43,7 +43,9 @@ class Graph:
         return ((a, b) for a in self.edges for b in self.edges[a])
 
     def neighbors(self, identity):
-        return self.edges[identity].keys()
+        if identity in self.edges:
+            return self.edges[identity].keys()
+        return set()
 
     def attributes_of(self, identity, identity2=None):
         if identity2 == None:
