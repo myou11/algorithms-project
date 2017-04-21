@@ -54,7 +54,7 @@ def bipartite_color_graph(g):
     between groups (not within) if the graph is bipartite.
     Otherwise, return the odd length cycle that prevents
     this graph from being two-colorable.
-    Assumes g is connected, otherwise run on each
+    Assumes g is connected, otherwise the user should run on each
     component and assemble final coloring from component coloring'''
     g = g.copy()
     s = list(g.nodes)[0]
@@ -84,6 +84,9 @@ def bipartite_color_graph(g):
     return ret_sets
 
 def main(argv):
+    if len(argv) < 2:
+        print('Must provide a filename for the graph to work on.')
+        exit(1)
     g = read_graph_from_file(argv[1])
     try:
         color1, color2 = bipartite_color_graph(g)
