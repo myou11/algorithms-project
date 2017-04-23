@@ -116,7 +116,10 @@ class FindCycle(unittest.TestCase):
             topo_sort = sort(graph_filename)
             self.fail('topological sort should have raised an Error!')
         except ValueError as err:
-            self.assertTrue(cycle_equal(err.cycle, ['H', 'C', 'F', 'I', 'B', 'D']))
+            cycle1 = ['H', 'C', 'F', 'I', 'B', 'D']
+            cycle2 = ['I', 'B', 'D']
+            self.assertTrue(cycle_equal(err.cycle, cycle1) or
+                            cycle_equal(err.cycle, cycle2))
 
     def test_graph12(self):
         graph_filename = graph_sample_folder + 'graph12_cycle.txt'
