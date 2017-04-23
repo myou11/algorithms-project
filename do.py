@@ -17,6 +17,11 @@ def create_tarball(args):
     print('Running:', ' '.join(command))
     subprocess.call(' '.join(command), shell=True, stdout=sys.stdout, stderr=sys.stderr)
 
+def print_graph_viz(args):
+    import project_support.graph_viz as gviz
+    for filename in args.filename:
+        gviz.print_graph_viz_representation(filename)
+
 def start_ipython(args):
     command = ["ipython3"]
     subprocess.call(command, stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
@@ -45,6 +50,12 @@ tar_parser.add_argument('-f', '--filename',
                             default=default_tar_filename,
                             help='name for the output tar file')
 
+## Viz subparser
+viz_parser = subparsers.add_parser('viz', description='Print graph viz representation of graph file',
+                                       help='Print graph viz representation of filename')
+viz_parser.set_defaults(func=print_graph_viz)
+viz_parser.add_argument('filename', nargs='+',
+                        help='graph file to print')
 
 ## REPL subparser
 repl_parser = subparsers.add_parser('repl', description='Start an interactive python session',
