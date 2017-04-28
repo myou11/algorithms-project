@@ -1,7 +1,18 @@
 import sys
-#from directed_graph import Digraph
+from directed_graph import Digraph
 
 # Feel free to use bipartite_recognition/core.py as a reference
+
+def read_edges_from_file(filename):
+    with open(filename) as f:
+        return [tuple(line.strip().split()) for line in f.readlines()]
+
+def read_graph_from_file(filename):
+    edges = read_edges_from_file(filename)  # returns a list of edges as tuples
+    g = Graph()             # create a graph to return
+    for v, u in edges:      # for each edge(tuple) in the edge list
+        g.add_edge(v, u)    # add the edges to the graph
+    return g                #return the graph
 
 
 def sort(directed_graph_filename):
@@ -10,6 +21,7 @@ def sort(directed_graph_filename):
     If the input graph is not a DAG, raise a ValueError with the nodes
     of cycle attached as a list, in cycle order.'''
     #  read in graph from file
+    
     #  compute a topological sort using DFS
     #  return the sort as a list of nodes, like:
     return ['a', 'b', 'c']
