@@ -8,7 +8,7 @@ def normalize_attributes(attributes):
         raise ValueError('attributes must be a dict or a set')
     return attributes
 
-class Graph:
+class Digraph:
     def __init__(self):
         self.nodes = {}
         self.edges = defaultdict(dict)
@@ -17,7 +17,7 @@ class Graph:
         return str({'nodes': self.nodes, 'edges': self.edges})
 
     def copy(self):
-        ret = Graph()
+        ret = Digraph()
         ret.nodes = copy.deepcopy(self.nodes)
         ret.edges = copy.deepcopy(self.edges)
         return ret
